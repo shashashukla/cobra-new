@@ -21,6 +21,7 @@ import UserValidationForm from "@/components/UserValidationForm.vue";
 import OtpValidationForm from "@/components/OtpValidationForm.vue";
 import UserDetails from "@/components/UserDetails.vue";
 import * as EmployeeService from "@/services/employeeService";
+import { toast } from "vue3-toastify";
 
 export default defineComponent({
   components: {
@@ -46,6 +47,9 @@ export default defineComponent({
     },
     handleOtpSubmit(data: Record<string, any>): void {
       this.formData = data;
+      toast.success("Your Email address has been successfully verified", {
+        position: toast.POSITION.TOP_CENTER,
+      });
       this.currentStep = "UserDetails";
     },
   },
