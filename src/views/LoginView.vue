@@ -42,7 +42,7 @@ export default defineComponent({
   data() {
     return {
       currentStep: "UserValidationForm",
-      formData: {} as Record<string, any>,
+      formData: {} as Record<string, number>,
     };
   },
   methods: {
@@ -55,7 +55,7 @@ export default defineComponent({
         this.currentStep = "OtpValidationForm";
       }
     },
-    handleOtpSubmit(data: Record<string, any>): void {
+    handleOtpSubmit(data: Record<string, number>): void {
       this.formData = data;
       toast.success("Your Email address has been successfully verified", {
         position: toast.POSITION.TOP_CENTER,
