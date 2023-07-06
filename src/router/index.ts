@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import HomeView from "../views/HomeView.vue";
+import LoginView from "../views/LoginView.vue";
 import Loader from "@/components/common/LoaderComponent.vue";
 import { createApp, h } from "vue";
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
-    component: HomeView,
+    component: LoginView,
   },
   {
     path: "/about",
