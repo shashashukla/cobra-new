@@ -1,17 +1,26 @@
-$primary-color: #FFFFFF;
+$primary-color: #ffffff;
 $primary-text-color: #6c757d;
+$border-radius: 2px;
+
+@import "~bootstrap/scss/bootstrap";
 
 body {
-    background-color: $primary-color;
+  background-color: $primary-color;
 }
-.container{
-    margin: 0 auto;
+.container {
+  margin: 0 auto;
 
-    h3 {
-        color: $primary-text-color;
-    }
+  h3 {
+    color: $primary-text-color;
+  }
 
-    .page-title{
-        font-size: 30px;
-    }
+  .page-title {
+    font-size: 30px;
+  }
+}
+
+.container-fluid {
+  label.form-label {
+    font-size: 14px;
+  }
 }
