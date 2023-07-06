@@ -2,18 +2,17 @@
   <div class="about">
     <h1>Get Started</h1>
     <form>
-      <div class="form-group row mb-3">
-        <label for="email" class="col-sm-3 col-form-label">Email</label>
-        <div class="col-sm-9">
-          <input
-            type="email"
-            v-model="user.email"
-            id="email"
-            name="email"
-            class="form-control"
-            :class="{ 'is-invalid': submitted && v$.user.email.$error }"
-          />
-        </div>
+      <div class="form-group mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          v-model="user.email"
+          id="email"
+          name="email"
+          class="form-control"
+          :class="{ 'is-invalid': submitted && v$.user.email.$error }"
+        />
+
         <div v-if="submitted && v$.user.email.$error">
           <div
             class="input-errors"
@@ -25,56 +24,54 @@
           </div>
         </div>
       </div>
-      <div class="form-group row mb-3">
-        <label for="ssn" class="col-sm-3 col-form-label">SSN</label>
-        <div class="col-sm-9">
-          <input
-            type="text"
-            v-model="user.ssn"
-            id="ssn"
-            name="ssn"
-            class="form-control"
-            :class="{ 'is-invalid': submitted && v$.user.ssn.$error }"
-          />
-        </div>
+      <div class="form-group mb-3">
+        <label for="ssn" class="form-label">SSN</label>
+        <input
+          type="text"
+          v-model="user.ssn"
+          id="ssn"
+          name="ssn"
+          class="form-control"
+          :class="{ 'is-invalid': submitted && v$.user.ssn.$error }"
+        />
         <div v-if="submitted && v$.user.ssn.$error">
           <span v-if="v$.user.ssn.required"> SSN is required </span>
         </div>
       </div>
-      <div class="form-group row mb-3">
-        <label for="zipcode" class="col-sm-3 col-form-label">Zip Code</label>
-        <div class="col-sm-9">
-          <input
-            type="text"
-            v-model="user.zipcode"
-            id="zipcode"
-            name="zipcode"
-            class="form-control"
-            :class="{ 'is-invalid': submitted && v$.user.zipcode.$error }"
-          />
-        </div>
+      <div class="form-group mb-3">
+        <label for="zipcode" class="form-label">Zip Code</label>
+        <input
+          type="text"
+          v-model="user.zipcode"
+          id="zipcode"
+          name="zipcode"
+          class="form-control"
+          :class="{ 'is-invalid': submitted && v$.user.zipcode.$error }"
+        />
         <div v-if="submitted && v$.user.zipcode.$error">
           <span v-if="v$.user.zipcode.required"> Zipcode is required </span>
         </div>
       </div>
-      <div class="form-group row mb-3">
-        <label for="dob" class="col-sm-3 col-form-label">Date Of Birth</label>
-        <div class="col-sm-9">
-          <Datepicker
-            v-model="user.dob"
-            id="dob"
-            inputFormat="dd-MM-yyyy"
-            class="form-control"
-            :class="{ 'is-invalid': submitted && v$.user.dob.$error }"
-          ></Datepicker>
-        </div>
+      <div class="form-group mb-3">
+        <label for="dob" class="form-label">Date Of Birth</label>
+        <Datepicker
+          v-model="user.dob"
+          id="dob"
+          inputFormat="dd-MM-yyyy"
+          class="form-control"
+          :class="{ 'is-invalid': submitted && v$.user.dob.$error }"
+        ></Datepicker>
         <div v-if="submitted && v$.user.dob.$error">
           <span v-if="v$.user.dob.required"> Date of birth is required </span>
         </div>
       </div>
 
-      <div class="form-group">
-        <button class="btn btn-primary" type="button" @click="userDataSubmit">
+      <div class="form-group mt-4">
+        <button
+          class="btn btn-success w-100"
+          type="button"
+          @click="userDataSubmit"
+        >
           VERIFY WITH EMAIL
         </button>
       </div>

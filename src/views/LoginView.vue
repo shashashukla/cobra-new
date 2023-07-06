@@ -1,23 +1,27 @@
 <template>
-  <div class="container">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-md-6">
-        <h1 class="text-white mb-3">Benefits</h1>
-        <p class="text-white">
-          The COBRA Enrollment Portal project aims to provide employees with a
-          user-friendly web portal that enables them to self-enroll in COBRA
-          benefits. The portal encompasses a comprehensive workflow designed to
-          guide individuals through the enrollment process and allows them to
-          select from the benefits offered by their former employer.
-        </p>
+        <div class="benefits-section">
+          <h1 class="text-white mb-3">Benefits</h1>
+          <p class="text-white">
+            The COBRA Enrollment Portal project aims to provide employees with a
+            user-friendly web portal that enables them to self-enroll in COBRA
+            benefits. The portal encompasses a comprehensive workflow designed
+            to guide individuals through the enrollment process and allows them
+            to select from the benefits offered by their former employer.
+          </p>
+        </div>
       </div>
       <div class="col-md-6">
-        <component
-          :is="currentStep"
-          :formData="formData"
-          @userDataValidate="handleOtpValidation"
-          @otpValueSubmit="handleOtpSubmit"
-        ></component>
+        <div class="login-section">
+          <component
+            :is="currentStep"
+            :formData="formData"
+            @userDataValidate="handleOtpValidation"
+            @otpValueSubmit="handleOtpSubmit"
+          ></component>
+        </div>
       </div>
     </div>
   </div>
@@ -66,7 +70,7 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
+<style scoped lang="scss">
 /* Add your custom styles here */
 .half-bg {
   background-image: url("../assets/login-bg.png");
@@ -76,5 +80,15 @@ export default defineComponent({
   top: 0;
   z-index: -1;
   background-size: contain;
+}
+.login-section {
+  max-width: 350px;
+  margin: auto;
+}
+
+.benefits-section {
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
 }
 </style>
