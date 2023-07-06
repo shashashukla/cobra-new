@@ -19,8 +19,13 @@
             v-for="(error, index) of v$.user.email.$errors"
             :key="index"
           >
-            <span v-if="error.$validator == 'required'">Email is required</span>
-            <span v-if="error.$validator == 'email'">Email is invalid</span>
+            <span
+              :class="{ 'is-invalid': submitted && v$.user.email.$error }"
+              v-if="
+                error.$validator == 'required' || error.$validator == 'email'
+              "
+              >Plase enter a valid email address</span
+            >
           </div>
         </div>
       </div>
