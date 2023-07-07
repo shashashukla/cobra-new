@@ -39,7 +39,7 @@
           class="form-control"
           :class="{ 'is-invalid': submitted && v$.user.ssn.$error }"
         />
-        <div v-if="submitted && v$.user.ssn.$error">
+        <div class="input-errors" v-if="submitted && v$.user.ssn.$error">
           <span v-if="v$.user.ssn.required"> SSN is required </span>
         </div>
       </div>
@@ -53,7 +53,7 @@
           class="form-control"
           :class="{ 'is-invalid': submitted && v$.user.zipcode.$error }"
         />
-        <div v-if="submitted && v$.user.zipcode.$error">
+        <div class="input-errors" v-if="submitted && v$.user.zipcode.$error">
           <span v-if="v$.user.zipcode.required"> Zipcode is required </span>
         </div>
       </div>
@@ -66,7 +66,7 @@
           class="form-control"
           :class="{ 'is-invalid': submitted && v$.user.dob.$error }"
         ></Datepicker>
-        <div v-if="submitted && v$.user.dob.$error">
+        <div class="input-errors" v-if="submitted && v$.user.dob.$error">
           <span v-if="v$.user.dob.required"> Date of birth is required </span>
         </div>
       </div>

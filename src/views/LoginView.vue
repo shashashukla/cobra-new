@@ -1,8 +1,9 @@
 <template>
   <div class="container-fluid">
     <div class="row">
-      <div class="col-md-6">
-        <div class="benefits-section">
+      <div class="col-md-6 position-md-static position-relative">
+        <div class="half-bg position-md-fixed position-absolute"></div>
+        <div class="benefits-section p-3 p-md-0">
           <h1 class="text-white mb-3">Benefits</h1>
           <p class="text-white">
             The COBRA Enrollment Portal project aims to provide employees with a
@@ -14,7 +15,7 @@
         </div>
       </div>
       <div class="col-md-6">
-        <div class="login-section">
+        <div class="login-section p-3 p-md-0">
           <component
             :is="currentStep"
             :formData="formData"
@@ -25,7 +26,6 @@
       </div>
     </div>
   </div>
-  <div class="half-bg"></div>
 </template>
 
 <script lang="ts">
@@ -72,23 +72,4 @@ export default defineComponent({
 
 <style scoped lang="scss">
 /* Add your custom styles here */
-.half-bg {
-  background-image: url("../assets/login-bg.png");
-  width: 50%;
-  height: 100%;
-  position: absolute;
-  top: 0;
-  z-index: -1;
-  background-size: contain;
-}
-.login-section {
-  max-width: 350px;
-  margin: auto;
-}
-
-.benefits-section {
-  max-width: 500px;
-  text-align: center;
-  margin: 0 auto;
-}
 </style>
