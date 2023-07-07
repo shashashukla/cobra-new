@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="header-logo mb-5">
+    <div class="header-logo mx-auto mb-3 me-md-0 mb-md-5">
       <img src="@/assets/logo.png" alt="Logo" />
     </div>
   </div>

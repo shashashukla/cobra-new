@@ -1,9 +1,32 @@
 $primary-color: #ffffff;
 $primary-text-color: #6c757d;
 $border-radius: 2px;
+$error_color: #ff0000;
+$bg_path: url("assets/login-bg.png");
+$grid-breakpoints: (
+  xs: 0,
+  sm: 576px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+$positions: (static, absolute, relative, fixed, sticky);
 
 @import "~bootstrap/scss/bootstrap";
-
+@import "~bootstrap/dist/css/bootstrap.css";
+@each $breakpoint in map-keys($grid-breakpoints) {
+  @include media-breakpoint-up($breakpoint) {
+    $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+    // Common values
+    @each $position in $positions {
+      .position#{$infix}-#{$position} {
+        position: $position !important;
+      }
+    }
+  }
+}
 body {
   background-color: $primary-color;
 }
@@ -18,9 +41,55 @@ body {
     font-size: 30px;
   }
 }
+label.form-label {
+  font-size: 14px;
+}
 
-.container-fluid {
-  label.form-label {
-    font-size: 14px;
+.input-errors {
+  font-size: 12px;
+  margin-top: 5px;
+  color: $error_color;
+}
+
+.form-control.is-invalid {
+  color: $error_color;
+}
+
+.form-control {
+  font-size: 14px;
+  padding: 10px 15px;
+}
+.half-bg {
+  background-image: $bg_path;
+  background-size: 50%;
+  background-repeat: repeat-y;
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+.login-section {
+  max-width: 350px;
+  margin: auto;
+}
+
+.benefits-section {
+  max-width: 500px;
+  text-align: center;
+  margin: 0 auto;
+}
+
+@media (max-width: 468px) {
+  .half-bg {
+    background-size: 100%;
+  }
+  .header-logo {
+    margin-right: auto;
+    margin-top: 30px;
+  }
+  .position-sm-relative {
+    position: relative;
   }
 }
