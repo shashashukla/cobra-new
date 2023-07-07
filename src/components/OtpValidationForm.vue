@@ -2,7 +2,7 @@
   <div>
     <h3>Enter Verification Code</h3>
     <p>We have sent a verification code to</p>
-    <p>{{ user.email }}</p>
+    <p>{{ obscureEmail(user.email) }}</p>
     <form>
       <div class="form-group mb-3">
         <label for="name" class="form-label">Code</label>
@@ -11,31 +11,27 @@
           class="form-control"
           id="name"
           v-model="otpcode"
-          :class="{ 'is-invalid': submitted && v$.otpcode.$error }"
+          @input="v$.otpcode.$touch()"
+          :class="{ 'is-invalid': v$.otpcode.$error }"
         />
-        <div v-if="submitted && v$.otpcode.$error">
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.otpcode.$errors"
-            :key="index"
+        <div class="input-errors" v-if="v$.otpcode.$error">
+          <span
+            :class="{ 'is-invalid': v$.otpcode.$error }"
+            v-if="v$.otpcode.required"
           >
-            <span v-if="error.$validator == 'required'"
-              >Please enter a valid verification code</span
-            >
-            <span v-if="error.$validator == 'maxLength'"
-              >Please enter a 6 digit code</span
-            >
-            <span v-if="error.$validator == 'minLength'"
-              >Please enter a 6 digit code</span
-            >
-            <span v-if="error.$validator == 'numeric'"
-              >Please enter a 6 digit code</span
-            >
-          </div>
+            Please enter a valid verification code
+            <span class="error-icon"></span
+          ></span>
         </div>
       </div>
       <div class="form-group mt-4">
-        <button class="btn btn-success w-100" type="button" @click="submitOtp">
+        <button
+          type="button"
+          :disabled="v$.otpcode.$invalid"
+          class="btn w-100"
+          :class="[buttonDesign()]"
+          @click="submitOtp"
+        >
           VERIFY
         </button>
       </div>
@@ -85,6 +81,16 @@ export default defineComponent({
     };
   },
   methods: {
+    obscureEmail(userEmail: string) {
+      const [name, domain] = userEmail.split("@");
+      return `${new Array(name.length - 4).join("*")}${name.substring(
+        4
+      )}@${domain}`;
+    },
+    buttonDesign() {
+      const buttonStatus = this.v$.otpcode.$invalid;
+      return buttonStatus == true ? "btn-secondary" : "btn-success";
+    },
     async submitOtp(): Promise<void> {
       this.submitted = true;
       console.log("otpValueSubmit");

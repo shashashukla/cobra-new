@@ -7,25 +7,27 @@
         <input
           type="email"
           v-model="user.email"
+          @input="v$.user.email.$touch()"
           id="email"
-          name="email"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.email.$error }"
+          :class="{
+            'is-invalid': v$.user.email.$error,
+          }"
         />
 
-        <div v-if="submitted && v$.user.email.$error">
+        <div v-if="v$.user.email.$error">
           <div
             class="input-errors"
             v-for="(error, index) of v$.user.email.$errors"
             :key="index"
           >
             <span
-              :class="{ 'is-invalid': submitted && v$.user.email.$error }"
+              :class="{ 'is-invalid': v$.user.email.$error }"
               v-if="
                 error.$validator == 'required' || error.$validator == 'email'
               "
-              >Plase enter a valid email address</span
-            >
+              >Plase enter a valid email address<span class="error-icon"></span
+            ></span>
           </div>
         </div>
       </div>
@@ -34,13 +36,18 @@
         <input
           type="text"
           v-model="user.ssn"
+          @input="v$.user.ssn.$touch()"
           id="ssn"
-          name="ssn"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.ssn.$error }"
+          :class="{ 'is-invalid': v$.user.ssn.$error }"
         />
-        <div class="input-errors" v-if="submitted && v$.user.ssn.$error">
-          <span v-if="v$.user.ssn.required"> SSN is required </span>
+        <div class="input-errors" v-if="v$.user.ssn.$error">
+          <span
+            :class="{ 'is-invalid': v$.user.ssn.$error }"
+            v-if="v$.user.ssn.required"
+          >
+            Please enter a valid SSN <span class="error-icon"></span
+          ></span>
         </div>
       </div>
       <div class="form-group mb-3">
@@ -48,33 +55,46 @@
         <input
           type="text"
           v-model="user.zipcode"
+          @input="v$.user.zipcode.$touch()"
           id="zipcode"
-          name="zipcode"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.zipcode.$error }"
+          :class="{ 'is-invalid': v$.user.zipcode.$error }"
         />
-        <div class="input-errors" v-if="submitted && v$.user.zipcode.$error">
-          <span v-if="v$.user.zipcode.required"> Zipcode is required </span>
+        <div class="input-errors" v-if="v$.user.zipcode.$error">
+          <span
+            :class="{ 'is-invalid': v$.user.zipcode.$error }"
+            v-if="v$.user.zipcode.required"
+          >
+            Please enter a valid zip code <span class="error-icon"></span
+          ></span>
         </div>
       </div>
       <div class="form-group mb-3">
         <label for="dob" class="form-label">Date Of Birth</label>
         <Datepicker
           v-model="user.dob"
+          @input="v$.user.dob.$touch()"
           id="dob"
           inputFormat="dd-MM-yyyy"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.dob.$error }"
+          :class="{ 'is-invalid': v$.user.dob.$error }"
         ></Datepicker>
-        <div class="input-errors" v-if="submitted && v$.user.dob.$error">
-          <span v-if="v$.user.dob.required"> Date of birth is required </span>
+        <div class="input-errors" v-if="v$.user.dob.$error">
+          <span
+            :class="{ 'is-invalid': v$.user.dob.$error }"
+            v-if="v$.user.dob.required"
+          >
+            Please enter a valid date of birth <span class="error-icon"></span
+          ></span>
         </div>
       </div>
 
       <div class="form-group mt-4">
         <button
-          class="btn btn-success w-100"
+          :disabled="v$.user.$invalid"
+          class="btn w-100"
           type="button"
+          :class="[buttonDesign()]"
           @click="userDataSubmit"
         >
           VERIFY WITH EMAIL
@@ -86,7 +106,13 @@
 <script lang="ts">
 // @ is an alias to /src
 import { defineComponent } from "vue";
-import { required, email } from "@vuelidate/validators";
+import {
+  required,
+  email,
+  minLength,
+  maxLength,
+  numeric,
+} from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import Datepicker from "vue3-datepicker";
 import moment from "moment";
@@ -115,13 +141,22 @@ export default defineComponent({
       user: {
         email: { required, email },
         ssn: { required },
-        zipcode: { required },
+        zipcode: {
+          required,
+          minLength: minLength(6),
+          maxLength: maxLength(6),
+          numeric,
+        },
         dob: { required },
       },
     };
   },
   computed: {},
   methods: {
+    buttonDesign() {
+      const buttonStatus = this.v$.user.$invalid;
+      return buttonStatus == true ? "btn-secondary" : "btn-success";
+    },
     async userDataSubmit(): Promise<void> {
       this.submitted = true;
       console.log("formval", this.user);

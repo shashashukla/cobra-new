@@ -63,6 +63,7 @@ export default defineComponent({
       this.formData = data;
       toast.success("Your Email address has been successfully verified", {
         position: toast.POSITION.TOP_CENTER,
+        style: { width: "auto" },
       });
       this.currentStep = "UserDetails";
     },

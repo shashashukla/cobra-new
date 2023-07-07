@@ -7,12 +7,18 @@
         <input
           type="text"
           v-model="user.name"
+          @input="v$.user.name.$touch()"
           id="name"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.name.$error }"
+          :class="{ 'is-invalid': v$.user.name.$error }"
         />
-        <div v-if="submitted && v$.user.name.$error" class="input-errors">
-          <span v-if="v$.user.name.required"> Name is required </span>
+        <div v-if="v$.user.name.$error" class="input-errors">
+          <span
+            :class="{ 'is-invalid': v$.user.name.$error }"
+            v-if="v$.user.name.required"
+          >
+            Please enter your name <span class="error-icon"></span
+          ></span>
         </div>
       </div>
       <div class="form-group mb-3">
@@ -20,12 +26,18 @@
         <input
           type="text"
           v-model="user.ssn"
+          @input="v$.user.ssn.$touch()"
           id="ssn"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.ssn.$error }"
+          :class="{ 'is-invalid': v$.user.ssn.$error }"
         />
-        <div v-if="submitted && v$.user.ssn.$error" class="input-errors">
-          <span v-if="v$.user.ssn.required"> SSN is required </span>
+        <div v-if="v$.user.ssn.$error" class="input-errors">
+          <span
+            :class="{ 'is-invalid': v$.user.ssn.$error }"
+            v-if="v$.user.ssn.required"
+          >
+            Please enter a valid SSN <span class="error-icon"></span>
+          </span>
         </div>
       </div>
       <div class="form-group mb-3">
@@ -33,11 +45,17 @@
         <input
           type="text"
           v-model="user.address"
+          @input="v$.user.address.$touch()"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.address.$error }"
+          :class="{ 'is-invalid': v$.user.address.$error }"
         />
-        <div v-if="submitted && v$.user.address.$error" class="input-errors">
-          <span v-if="v$.user.address.required"> SSN is required </span>
+        <div v-if="v$.user.address.$error" class="input-errors">
+          <span
+            :class="{ 'is-invalid': v$.user.address.$error }"
+            v-if="v$.user.address.required"
+          >
+            Please enter your address <span class="error-icon"></span
+          ></span>
         </div>
       </div>
       <div class="form-group mb-3">
@@ -45,11 +63,17 @@
         <input
           type="text"
           v-model="user.zip"
+          @input="v$.user.zip.$touch()"
           class="form-control"
-          :class="{ 'is-invalid': submitted && v$.user.zip.$error }"
+          :class="{ 'is-invalid': v$.user.zip.$error }"
         />
-        <div v-if="submitted && v$.user.zip.$error" class="input-errors">
-          <span v-if="v$.user.zip.required"> Zipcode is required </span>
+        <div v-if="v$.user.zip.$error" class="input-errors">
+          <span
+            :class="{ 'is-invalid': v$.user.zip.$error }"
+            v-if="v$.user.zip.required"
+          >
+            Please enter a valid zip code <span class="error-icon"></span
+          ></span>
         </div>
       </div>
       <div class="form-group mb-3">
@@ -106,8 +130,10 @@
       </div>
       <div class="form-group mt-4">
         <button
-          class="btn btn-success w-100"
+          :disabled="v$.user.$invalid"
+          class="btn w-100"
           type="button"
+          :class="[buttonDesign()]"
           @click="userDataSubmit"
         >
           SUBMIT
@@ -119,7 +145,7 @@
 <script lang="ts">
 // @ is an alias to /src
 import { defineComponent } from "vue";
-import { required } from "@vuelidate/validators";
+import { required, minLength, maxLength, numeric } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import Datepicker from "vue3-datepicker";
 //import { ref } from "vue";
@@ -161,7 +187,12 @@ export default defineComponent({
         name: { required },
         ssn: { required },
         address: { required },
-        zip: { required },
+        zip: {
+          required,
+          minLength: minLength(6),
+          maxLength: maxLength(6),
+          numeric,
+        },
         //dob: { required },
         //gender: { required },
       },
@@ -179,6 +210,10 @@ export default defineComponent({
     },
   },
   methods: {
+    buttonDesign() {
+      const buttonStatus = this.v$.user.$invalid;
+      return buttonStatus == true ? "btn-secondary" : "btn-success";
+    },
     async userDataSubmit(): Promise<void> {
       this.submitted = true;
       console.log("formval", this.user);
