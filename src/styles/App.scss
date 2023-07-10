@@ -93,3 +93,15 @@ label.form-label {
     position: relative;
   }
 }
+.vuejs3-datepicker .vuejs3-datepicker__value {
+  border: 0;
+  flex-direction: row-reverse;
+  padding: 10px 15px;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.vuejs3-datepicker .vuejs3-datepicker__content {
+  font-size: 14px;
+  margin-left: 0;
+}

@@ -71,14 +71,20 @@
       </div>
       <div class="form-group mb-3">
         <label for="dob" class="form-label">Date Of Birth</label>
-        <Datepicker
+        <datepicker
+          :modelValue="user.dob"
+          format="dd-MM-yyyy"
+          :class="{ 'is-invalid': v$.user.dob.$error }"
+          wrapper-class="form-control p-0"
+        ></datepicker>
+        <!-- <Datepicker
           v-model="user.dob"
           @input="v$.user.dob.$touch()"
           id="dob"
           inputFormat="dd-MM-yyyy"
           class="form-control"
           :class="{ 'is-invalid': v$.user.dob.$error }"
-        ></Datepicker>
+        ></Datepicker> -->
         <div class="input-errors" v-if="v$.user.dob.$error">
           <span
             :class="{ 'is-invalid': v$.user.dob.$error }"
@@ -114,7 +120,8 @@ import {
   numeric,
 } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import Datepicker from "vue3-datepicker";
+// import Datepicker from "vue3-datepicker";
+import Datepicker from "vuejs3-datepicker";
 import moment from "moment";
 
 export default defineComponent({
