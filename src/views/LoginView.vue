@@ -21,6 +21,8 @@
             :formData="formData"
             @userDataValidate="handleOtpValidation"
             @otpValueSubmit="handleOtpSubmit"
+            @editEmailId="handleEmailId"
+            @otpValidateForm="otpValidateForm"
           ></component>
         </div>
       </div>
@@ -33,6 +35,7 @@ import { defineComponent } from "vue";
 import UserValidationForm from "@/components/UserValidationForm.vue";
 import OtpValidationForm from "@/components/OtpValidationForm.vue";
 import UserDetails from "@/components/UserDetails.vue";
+import EditEmailForm from "@/components/EditEmailForm.vue";
 import * as EmployeeService from "@/services/employeeService";
 import { toast } from "vue3-toastify";
 
@@ -42,6 +45,7 @@ export default defineComponent({
     UserValidationForm,
     OtpValidationForm,
     UserDetails,
+    EditEmailForm,
   },
   data() {
     return {
@@ -59,13 +63,19 @@ export default defineComponent({
         this.currentStep = "OtpValidationForm";
       }
     },
-    handleOtpSubmit(data: Record<string, number>): void {
+    handleOtpSubmit(data: Record<string, number>) {
       this.formData = data;
       toast.success("Your Email address has been successfully verified", {
         position: toast.POSITION.TOP_CENTER,
         style: { width: "auto" },
       });
       this.currentStep = "UserDetails";
+    },
+    handleEmailId() {
+      this.currentStep = "EditEmailForm";
+    },
+    otpValidateForm() {
+      this.currentStep = "OtpValidationForm";
     },
   },
 });

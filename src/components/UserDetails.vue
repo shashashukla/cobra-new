@@ -78,11 +78,12 @@
       </div>
       <div class="form-group mb-3">
         <label for="dob" class="form-label">Date Of Birth</label>
-        <Datepicker
-          id="dob"
-          inputFormat="dd-MM-yyyy"
-          class="form-control"
-        ></Datepicker>
+        <datepicker
+          :modelValue="user.dob"
+          format="dd-MM-yyyy"
+          :class="{ 'is-invalid': v$.user.dob.$error }"
+          wrapper-class="form-control p-0"
+        ></datepicker>
       </div>
       <div class="form-group mb-3">
         <label for="gender" class="form-label">Gender</label>
@@ -134,7 +135,6 @@
           class="btn w-100"
           type="button"
           :class="[buttonDesign()]"
-          @click="userDataSubmit"
         >
           SUBMIT
         </button>
@@ -147,8 +147,7 @@
 import { defineComponent } from "vue";
 import { required, minLength, maxLength, numeric } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import Datepicker from "vue3-datepicker";
-//import { ref } from "vue";
+import Datepicker from "vuejs3-datepicker";
 import moment from "moment";
 
 export default defineComponent({
@@ -193,7 +192,7 @@ export default defineComponent({
           maxLength: maxLength(6),
           numeric,
         },
-        //dob: { required },
+        dob: { required },
         //gender: { required },
       },
     };
@@ -213,27 +212,6 @@ export default defineComponent({
     buttonDesign() {
       const buttonStatus = this.v$.user.$invalid;
       return buttonStatus == true ? "btn-secondary" : "btn-success";
-    },
-    async userDataSubmit(): Promise<void> {
-      this.submitted = true;
-      console.log("formval", this.user);
-      console.log("dateformat", moment(this.user.dob).format("DD-MM-yyyy"));
-      // stop here if form is invalid
-      this.v$.$touch();
-      if (this.v$.$invalid) {
-        return;
-      } else {
-        console.log("userdata", this.user);
-        const dobFormat = moment(this.user.dob).format("DD-MM-yyyy");
-        let listingParams = {
-          //email: this.user.email,
-          ssno: this.user.ssn,
-          zip: this.user.zip,
-          dob: dobFormat,
-        };
-        console.log("listingParams", listingParams);
-        //this.$emit("userDataValidate", this.user);
-      }
     },
   },
 });

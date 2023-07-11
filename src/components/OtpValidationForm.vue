@@ -2,7 +2,10 @@
   <div>
     <h3>Enter Verification Code</h3>
     <p>We have sent a verification code to</p>
-    <p>{{ obscureEmail(user.email) }}</p>
+    <p>
+      {{ user.email }}
+      <a class="text-success edit-email" @click="editEmailForm"> EDIT </a>
+    </p>
     <form>
       <div class="form-group mb-3">
         <label for="name" class="form-label">Code</label>
@@ -36,6 +39,11 @@
         </button>
       </div>
     </form>
+    <div class="mt-2">
+      <div class="text-secondary resend-code float-left">RESEND CODE</div>
+      <div class="timing-color float-right">{{ formatedCountdown }}</div>
+    </div>
+    <div class="clearfix"></div>
   </div>
 </template>
 
@@ -43,11 +51,9 @@
 import { defineComponent } from "vue";
 import { required, maxLength, minLength, numeric } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
+import moment from "moment";
 
 export default defineComponent({
-  components: {
-    //UserDetails,
-  },
   setup() {
     return { v$: useVuelidate() };
   },
@@ -68,6 +74,7 @@ export default defineComponent({
       },
       otpcode: "",
       submitted: false,
+      countdown: 60,
     };
   },
   validations() {
@@ -80,12 +87,20 @@ export default defineComponent({
       },
     };
   },
+  mounted() {
+    this.timerCountdowm();
+  },
+  computed: {
+    formatedCountdown() {
+      return moment(this.countdown, "seconds").format("m:ss");
+    },
+  },
   methods: {
-    obscureEmail(userEmail: string) {
-      const [name, domain] = userEmail.split("@");
-      return `${new Array(name.length - 4).join("*")}${name.substring(
-        4
-      )}@${domain}`;
+    timerCountdowm() {
+      const stopCountdown = setInterval(() => {
+        this.countdown -= 1;
+        if (!this.countdown) clearInterval(stopCountdown);
+      }, 1000);
     },
     buttonDesign() {
       const buttonStatus = this.v$.otpcode.$invalid;
@@ -93,16 +108,12 @@ export default defineComponent({
     },
     async submitOtp(): Promise<void> {
       this.submitted = true;
-      console.log("otpValueSubmit");
       this.v$.$touch();
-      if (this.v$.$invalid) {
-        console.log("ifcond");
-        return;
-      } else {
-        console.log("elsecond", this.user);
-        console.log("otpformData", this.formData);
-        this.$emit("otpValueSubmit", this.formData);
-      }
+      this.$emit("otpValueSubmit", this.formData);
+    },
+    async editEmailForm(): Promise<void> {
+      console.log("editEmailForm");
+      this.$emit("editEmailId");
     },
   },
 });

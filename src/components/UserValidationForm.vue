@@ -73,18 +73,11 @@
         <label for="dob" class="form-label">Date Of Birth</label>
         <datepicker
           :modelValue="user.dob"
+          @input="v$.user.dob.$touch()"
           format="dd-MM-yyyy"
           :class="{ 'is-invalid': v$.user.dob.$error }"
           wrapper-class="form-control p-0"
         ></datepicker>
-        <!-- <Datepicker
-          v-model="user.dob"
-          @input="v$.user.dob.$touch()"
-          id="dob"
-          inputFormat="dd-MM-yyyy"
-          class="form-control"
-          :class="{ 'is-invalid': v$.user.dob.$error }"
-        ></Datepicker> -->
         <div class="input-errors" v-if="v$.user.dob.$error">
           <span
             :class="{ 'is-invalid': v$.user.dob.$error }"
@@ -120,7 +113,6 @@ import {
   numeric,
 } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-// import Datepicker from "vue3-datepicker";
 import Datepicker from "vuejs3-datepicker";
 import moment from "moment";
 
@@ -158,7 +150,6 @@ export default defineComponent({
       },
     };
   },
-  computed: {},
   methods: {
     buttonDesign() {
       const buttonStatus = this.v$.user.$invalid;
@@ -173,15 +164,6 @@ export default defineComponent({
       if (this.v$.$invalid) {
         return;
       } else {
-        console.log("userdata", this.user);
-        const dobFormat = moment(this.user.dob).format("DD-MM-yyyy");
-        let listingParams = {
-          email: this.user.email,
-          ssno: this.user.ssn,
-          zipcode: this.user.zipcode,
-          dob: dobFormat,
-        };
-        console.log("listingParams", listingParams);
         this.$emit("userDataValidate", this.user);
       }
     },
