@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Welcome !</h1>
+    <h3 class="text-heading">Welcome !</h3>
     <form>
       <div class="form-group mb-3">
         <label for="name" class="form-label">Name</label>
@@ -10,7 +10,7 @@
           @input="v$.user.name.$touch()"
           id="name"
           class="form-control"
-          :class="{ 'is-invalid': v$.user.name.$error }"
+          :class="v$.user.name.$error ? 'is-invalid' : 'input-text'"
         />
         <div v-if="v$.user.name.$error" class="input-errors">
           <span
@@ -29,7 +29,7 @@
           @input="v$.user.ssn.$touch()"
           id="ssn"
           class="form-control"
-          :class="{ 'is-invalid': v$.user.ssn.$error }"
+          :class="v$.user.ssn.$error ? 'is-invalid' : 'input-text'"
         />
         <div v-if="v$.user.ssn.$error" class="input-errors">
           <span
@@ -47,7 +47,7 @@
           v-model="user.address"
           @input="v$.user.address.$touch()"
           class="form-control"
-          :class="{ 'is-invalid': v$.user.address.$error }"
+          :class="v$.user.address.$error ? 'is-invalid' : 'input-text'"
         />
         <div v-if="v$.user.address.$error" class="input-errors">
           <span
@@ -65,7 +65,7 @@
           v-model="user.zip"
           @input="v$.user.zip.$touch()"
           class="form-control"
-          :class="{ 'is-invalid': v$.user.zip.$error }"
+          :class="v$.user.zip.$error ? 'is-invalid' : 'input-text'"
         />
         <div v-if="v$.user.zip.$error" class="input-errors">
           <span
@@ -81,7 +81,7 @@
         <datepicker
           :modelValue="user.dob"
           format="dd-MM-yyyy"
-          :class="{ 'is-invalid': v$.user.dob.$error }"
+          :class="v$.user.dob.$error ? 'is-invalid' : 'input-text'"
           wrapper-class="form-control p-0"
         ></datepicker>
       </div>
@@ -132,7 +132,7 @@
       <div class="form-group mt-4">
         <button
           :disabled="v$.user.$invalid"
-          class="btn w-100"
+          class="btn w-100 button-textcolor"
           type="button"
           :class="[buttonDesign()]"
         >
@@ -211,7 +211,7 @@ export default defineComponent({
   methods: {
     buttonDesign() {
       const buttonStatus = this.v$.user.$invalid;
-      return buttonStatus == true ? "btn-secondary" : "btn-success";
+      return buttonStatus == true ? "btn-secondary" : "button-successcolor";
     },
   },
 });

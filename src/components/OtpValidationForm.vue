@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>Enter Verification Code</h3>
+    <h3 class="text-heading">Enter Verification Code</h3>
     <p>We have sent a verification code to</p>
-    <p>
+    <p class="fonttext-color">
       {{ user.email }}
-      <a class="text-success edit-email" @click="editEmailForm"> EDIT </a>
+      <a class="edit-email" @click="editEmailForm"> EDIT </a>
     </p>
     <form>
       <div class="form-group mb-3">
@@ -15,7 +15,7 @@
           id="name"
           v-model="otpcode"
           @input="v$.otpcode.$touch()"
-          :class="{ 'is-invalid': v$.otpcode.$error }"
+          :class="v$.otpcode.$error ? 'is-invalid' : 'input-text'"
         />
         <div class="input-errors" v-if="v$.otpcode.$error">
           <span
@@ -31,7 +31,7 @@
         <button
           type="button"
           :disabled="v$.otpcode.$invalid"
-          class="btn w-100"
+          class="btn w-100 button-textcolor"
           :class="[buttonDesign()]"
           @click="submitOtp"
         >
@@ -104,7 +104,7 @@ export default defineComponent({
     },
     buttonDesign() {
       const buttonStatus = this.v$.otpcode.$invalid;
-      return buttonStatus == true ? "btn-secondary" : "btn-success";
+      return buttonStatus == true ? "btn-secondary" : "button-successcolor";
     },
     async submitOtp(): Promise<void> {
       this.submitted = true;

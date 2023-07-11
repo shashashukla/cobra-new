@@ -117,8 +117,56 @@ label.form-label {
 .float-right{float:right;}
 .timing-color{color:#004159;}
 .edit-email{
-  font-size: 12px;
   margin-left: 10px;
+  text-decoration: underline;
+  font: normal normal 600 14px/24px FreightSans Pro;
+  letter-spacing: 0.14px;
+  color: #5D9143;
+  text-transform: uppercase;
+  opacity: 1;
+  cursor: pointer;
+}
+.form-control.input-text {
+  text-align: left;
+  font: normal normal medium 14px/16px FreightSans Pro;
+  letter-spacing: 0px;
+  color: #024059 !important;
+  opacity: 1;
+}
+.fonttext-color{
+  text-align: left;
+  font: normal normal 600 16px/24px FreightSans Pro;
+  letter-spacing: 0.85px;
+  color: #024059;
+  opacity: 1;
+}
+.text-heading {
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--unnamed-color-024059);
+  letter-spacing: 0px;
+  color: #024059;
+  opacity: 1;
+}
+.button-successcolor {
+  background: var(--unnamed-color-5d9143) 0% 0% no-repeat padding-box;
+  background: #5D9143 0% 0% no-repeat padding-box;
+  opacity: 1;
+}
+.button-successcolor:hover {
+  background: var(--unnamed-color-5d9143) 0% 0% no-repeat padding-box;
+  background: #5D9143 0% 0% no-repeat padding-box;
+  opacity: 1;
+  color: #FFFFFF;
+}
+.button-textcolor {
+  font: var(--unnamed-font-style-normal) normal 600 16px/20px FreightSans Pro;
+  letter-spacing: var(--unnamed-character-spacing-0);
+  color: var(--unnamed-color-ffffff);
+  text-align: center;
+  letter-spacing: 0px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+  opacity: 1;
 }
 
 

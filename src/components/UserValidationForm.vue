@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h1>Get Started</h1>
+    <h3 class="text-heading">Get Started</h3>
     <form>
       <div class="form-group mb-3">
         <label for="email" class="form-label">Email</label>
@@ -10,9 +10,7 @@
           @input="v$.user.email.$touch()"
           id="email"
           class="form-control"
-          :class="{
-            'is-invalid': v$.user.email.$error,
-          }"
+          :class="v$.user.email.$error ? 'is-invalid' : 'input-text'"
         />
 
         <div v-if="v$.user.email.$error">
@@ -39,7 +37,7 @@
           @input="v$.user.ssn.$touch()"
           id="ssn"
           class="form-control"
-          :class="{ 'is-invalid': v$.user.ssn.$error }"
+          :class="v$.user.ssn.$error ? 'is-invalid' : 'input-text'"
         />
         <div class="input-errors" v-if="v$.user.ssn.$error">
           <span
@@ -58,7 +56,7 @@
           @input="v$.user.zipcode.$touch()"
           id="zipcode"
           class="form-control"
-          :class="{ 'is-invalid': v$.user.zipcode.$error }"
+          :class="v$.user.zipcode.$error ? 'is-invalid' : 'input-text'"
         />
         <div class="input-errors" v-if="v$.user.zipcode.$error">
           <span
@@ -75,7 +73,7 @@
           :modelValue="user.dob"
           @input="v$.user.dob.$touch()"
           format="dd-MM-yyyy"
-          :class="{ 'is-invalid': v$.user.dob.$error }"
+          :class="v$.user.dob.$error ? 'is-invalid' : 'input-text'"
           wrapper-class="form-control p-0"
         ></datepicker>
         <div class="input-errors" v-if="v$.user.dob.$error">
@@ -91,7 +89,7 @@
       <div class="form-group mt-4">
         <button
           :disabled="v$.user.$invalid"
-          class="btn w-100"
+          class="btn w-100 button-textcolor"
           type="button"
           :class="[buttonDesign()]"
           @click="userDataSubmit"
@@ -123,6 +121,12 @@ export default defineComponent({
   setup() {
     return { v$: useVuelidate() };
   },
+  props: {
+    formData: {
+      type: Object,
+      required: true,
+    },
+  },
   data() {
     return {
       user: {
@@ -153,7 +157,7 @@ export default defineComponent({
   methods: {
     buttonDesign() {
       const buttonStatus = this.v$.user.$invalid;
-      return buttonStatus == true ? "btn-secondary" : "btn-success";
+      return buttonStatus == true ? "btn-secondary" : "button-successcolor";
     },
     async userDataSubmit(): Promise<void> {
       this.submitted = true;
