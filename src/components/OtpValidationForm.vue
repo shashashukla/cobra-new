@@ -1,8 +1,8 @@
 <template>
   <div>
-    <h3 class="text-heading">Enter Verification Code</h3>
+    <h3 class="heading-title">Enter Verification Code</h3>
     <p>We have sent a verification code to</p>
-    <p class="fonttext-color">
+    <p class="email-text">
       {{ user.email }}
       <a class="edit-email" @click="editEmailForm"> EDIT </a>
     </p>
@@ -11,7 +11,7 @@
         <label for="name" class="form-label">Code</label>
         <input
           type="text"
-          class="form-control"
+          class="form-control type-number"
           id="name"
           v-model="otpcode"
           @input="v$.otpcode.$touch()"
@@ -31,7 +31,7 @@
         <button
           type="button"
           :disabled="v$.otpcode.$invalid"
-          class="btn w-100 button-textcolor"
+          class="btn w-100"
           :class="[buttonDesign()]"
           @click="submitOtp"
         >
@@ -104,7 +104,7 @@ export default defineComponent({
     },
     buttonDesign() {
       const buttonStatus = this.v$.otpcode.$invalid;
-      return buttonStatus == true ? "btn-secondary" : "button-successcolor";
+      return buttonStatus == true ? "btn-secondary" : "btn-primary";
     },
     async submitOtp(): Promise<void> {
       this.submitted = true;

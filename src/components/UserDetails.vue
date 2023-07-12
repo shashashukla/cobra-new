@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h3 class="text-heading">Welcome !</h3>
+    <h3 class="heading-title">Welcome !</h3>
     <form>
       <div class="form-group mb-3">
         <label for="name" class="form-label">Name</label>
@@ -29,7 +29,7 @@
           @input="v$.user.ssn.$touch()"
           id="ssn"
           disabled
-          class="form-control"
+          class="form-control type-number"
           :class="v$.user.ssn.$error ? 'is-invalid' : 'input-text'"
         />
         <div v-if="v$.user.ssn.$error" class="input-errors">
@@ -65,7 +65,7 @@
           type="text"
           v-model="user.zip"
           @input="v$.user.zip.$touch()"
-          class="form-control"
+          class="form-control type-number"
           :class="v$.user.zip.$error ? 'is-invalid' : 'input-text'"
         />
         <div v-if="v$.user.zip.$error" class="input-errors">
@@ -81,9 +81,13 @@
         <label for="dob" class="form-label">Date Of Birth</label>
         <datepicker
           v-model="user.dob"
-          format="dd-MM-yyyy"
+          @input="v$.user.dob.$touch()"
+          format="MM/dd/yyyy"
           :class="v$.user.dob.$error ? 'is-invalid' : 'input-text'"
-          wrapper-class="form-control p-0"
+          wrapper-class="d-block"
+          input-class="form-control type-number"
+          iconColor="#024059"
+          :hideInput="false"
         ></datepicker>
       </div>
       <div class="form-group mb-3">
@@ -133,7 +137,7 @@
       <div class="form-group mt-4">
         <button
           :disabled="v$.user.$invalid"
-          class="btn w-100 button-textcolor"
+          class="btn w-100"
           type="button"
           :class="[buttonDesign()]"
         >
@@ -174,7 +178,7 @@ export default defineComponent({
         ssn: this.formData.ssno,
         address: this.formData.address,
         zip: this.formData.zip,
-        dob: this.formData.dob,
+        dob: new Date(this.formData.dob),
         gender: this.formData.gender,
       },
       submitted: false,
@@ -212,7 +216,7 @@ export default defineComponent({
   methods: {
     buttonDesign() {
       const buttonStatus = this.v$.user.$invalid;
-      return buttonStatus == true ? "btn-secondary" : "button-successcolor";
+      return buttonStatus == true ? "btn-secondary" : "btn-primary";
     },
   },
 });

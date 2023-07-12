@@ -1,10 +1,10 @@
 <template>
-  <div class="container-fluid">
+  <div class="container-fluid login-page">
     <div class="row">
       <div class="col-md-6 position-md-static position-relative">
         <div class="half-bg position-md-fixed position-absolute"></div>
         <div class="benefits-section p-3 p-md-0">
-          <h1 class="text-white mb-3">Benefits</h1>
+          <h1 class="benefit-title text-white mb-3">Benefits</h1>
           <p class="text-white">
             The COBRA Enrollment Portal project aims to provide employees with a
             user-friendly web portal that enables them to self-enroll in COBRA
@@ -26,6 +26,14 @@
           ></component>
         </div>
       </div>
+    </div>
+  </div>
+  <div class="footer-row">
+    <div class="footer-links">
+      <ul>
+        <li><a href="#">Contact Us</a></li>
+        <li><a href="#">Privacy Statement</a></li>
+      </ul>
     </div>
   </div>
 </template>
@@ -68,6 +76,7 @@ export default defineComponent({
       toast.success("Your Email address has been successfully verified", {
         position: toast.POSITION.TOP_CENTER,
         style: { width: "auto" },
+        autoClose: false,
       });
       this.currentStep = "UserDetails";
     },

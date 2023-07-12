@@ -1,6 +1,6 @@
 <template>
   <div class="about">
-    <h3 class="text-heading">Get Started</h3>
+    <h1 class="heading-title">Get Started</h1>
     <form>
       <div class="form-group mb-3">
         <label for="email" class="form-label">Email</label>
@@ -36,7 +36,7 @@
           v-model="user.ssn"
           @input="v$.user.ssn.$touch()"
           id="ssn"
-          class="form-control"
+          class="form-control type-number"
           :class="v$.user.ssn.$error ? 'is-invalid' : 'input-text'"
         />
         <div class="input-errors" v-if="v$.user.ssn.$error">
@@ -55,7 +55,7 @@
           v-model="user.zipcode"
           @input="v$.user.zipcode.$touch()"
           id="zipcode"
-          class="form-control"
+          class="form-control type-number"
           :class="v$.user.zipcode.$error ? 'is-invalid' : 'input-text'"
         />
         <div class="input-errors" v-if="v$.user.zipcode.$error">
@@ -72,10 +72,12 @@
         <datepicker
           v-model="user.dob"
           @input="v$.user.dob.$touch()"
-          type="date"
-          format="dd-MM-yyyy"
+          format="MM/dd/yyyy"
           :class="v$.user.dob.$error ? 'is-invalid' : 'input-text'"
-          wrapper-class="form-control p-0"
+          wrapper-class="d-block"
+          input-class="form-control type-number"
+          iconColor="#024059"
+          :hideInput="false"
         ></datepicker>
         <div class="input-errors" v-if="v$.user.dob.$error">
           <span
@@ -90,7 +92,7 @@
       <div class="form-group mt-4">
         <button
           :disabled="v$.user.$invalid"
-          class="btn w-100 button-textcolor"
+          class="btn w-100"
           type="button"
           :class="[buttonDesign()]"
           @click="userDataSubmit"
@@ -103,7 +105,7 @@
 </template>
 <script lang="ts">
 // @ is an alias to /src
-import { defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import {
   required,
   email,
@@ -120,7 +122,9 @@ export default defineComponent({
     Datepicker,
   },
   setup() {
-    return { v$: useVuelidate() };
+    const dateinput = ref(new Date());
+
+    return { v$: useVuelidate(), dateinput };
   },
   props: {
     formData: {
@@ -134,7 +138,7 @@ export default defineComponent({
         email: "",
         ssn: "",
         zipcode: "",
-        dob: "",
+        dob: new Date(""),
       },
       submitted: false,
     };
@@ -158,12 +162,12 @@ export default defineComponent({
   methods: {
     buttonDesign() {
       const buttonStatus = this.v$.user.$invalid;
-      return buttonStatus == true ? "btn-secondary" : "button-successcolor";
+      return buttonStatus == true ? "btn-secondary" : "btn-primary";
     },
     async userDataSubmit(): Promise<void> {
       this.submitted = true;
-      console.log("formval", this.user);
-      console.log("dateformat", moment(this.user.dob).format("DD-MM-yyyy"));
+      // console.log("formval", this.user);
+      // console.log("dateformat", moment(this.user.dob).format("DD-MM-yyyy"));
       // stop here if form is invalid
       this.v$.$touch();
       if (this.v$.$invalid) {
@@ -171,6 +175,9 @@ export default defineComponent({
       } else {
         this.$emit("userDataValidate", this.user);
       }
+    },
+    dateSelected(payload: Date): void {
+      this.user.dob = new Date(payload);
     },
   },
 });

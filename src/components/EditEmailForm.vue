@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h3 class="text-heading">Enter Email</h3>
+    <h3 class="heading-title">Enter Email</h3>
     <form>
       <div class="form-group mb-3">
         <label for="email" class="form-label">Email</label>
@@ -32,7 +32,7 @@
         <button
           type="button"
           :disabled="v$.email.$invalid"
-          class="btn w-100 button-textcolor"
+          class="btn w-100"
           :class="[buttonDesign()]"
           @click="submitEmail"
         >
@@ -65,7 +65,7 @@ export default defineComponent({
   methods: {
     buttonDesign() {
       const buttonStatus = this.v$.email.$invalid;
-      return buttonStatus == true ? "btn-secondary" : "button-successcolor";
+      return buttonStatus == true ? "btn-secondary" : "btn-primary";
     },
     async submitEmail(): Promise<void> {
       this.v$.$touch();
