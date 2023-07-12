@@ -96,7 +96,7 @@
           <div class="form-check-inline">
             <label class="form-check-label" for="male">
               <input
-                type="radio"
+                type="checkbox"
                 class="form-check-input"
                 value="M"
                 id="male"
@@ -109,7 +109,7 @@
           <div class="form-check-inline">
             <label class="form-check-label" for="female">
               <input
-                type="radio"
+                type="checkbox"
                 class="form-check-input"
                 value="F"
                 id="female"
@@ -122,7 +122,7 @@
           <div class="form-check-inline">
             <label class="form-check-label" for="other">
               <input
-                type="radio"
+                type="checkbox"
                 class="form-check-input"
                 value="Other"
                 id="other"
