@@ -28,6 +28,7 @@
           v-model="user.ssn"
           @input="v$.user.ssn.$touch()"
           id="ssn"
+          disabled
           class="form-control"
           :class="v$.user.ssn.$error ? 'is-invalid' : 'input-text'"
         />
@@ -79,7 +80,7 @@
       <div class="form-group mb-3">
         <label for="dob" class="form-label">Date Of Birth</label>
         <datepicker
-          :modelValue="user.dob"
+          v-model="user.dob"
           format="dd-MM-yyyy"
           :class="v$.user.dob.$error ? 'is-invalid' : 'input-text'"
           wrapper-class="form-control p-0"

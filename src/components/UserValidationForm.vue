@@ -70,8 +70,9 @@
       <div class="form-group mb-3">
         <label for="dob" class="form-label">Date Of Birth</label>
         <datepicker
-          :modelValue="user.dob"
+          v-model="user.dob"
           @input="v$.user.dob.$touch()"
+          type="date"
           format="dd-MM-yyyy"
           :class="v$.user.dob.$error ? 'is-invalid' : 'input-text'"
           wrapper-class="form-control p-0"
@@ -133,7 +134,7 @@ export default defineComponent({
         email: "",
         ssn: "",
         zipcode: "",
-        dob: new Date(),
+        dob: "",
       },
       submitted: false,
     };
