@@ -23,8 +23,9 @@ export default {
 
           const rect = el.getBoundingClientRect();
           const tooltipRect = tooltip.getBoundingClientRect();
-
-          tooltip.style.top = `${rect.top - tooltipRect.height + 17}px`;
+          tooltip.style.top = `${
+            rect.top + window.scrollY - tooltipRect.height - 4
+          }px`;
           tooltip.style.left = `${rect.left + rect.width / 2 - 15}px`;
         });
 
