@@ -1,6 +1,8 @@
 <template>
-  <div class="login-header">
-    <div class="header-logo mx-auto me-md-0">
+  <div
+    class="login-header position-static position-lg-absolute text-center py-3 py-lg-0"
+  >
+    <div class="header-logo">
       <img src="@/assets/logo.png" alt="Logo" />
     </div>
   </div>
@@ -16,11 +18,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-.header-logo {
-  margin-right: 0;
-  margin-left: auto;
-  display: block;
-  width: 200px;
-}
-</style>
+<style scoped></style>

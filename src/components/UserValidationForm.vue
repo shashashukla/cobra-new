@@ -3,7 +3,10 @@
     <h1 class="heading-title">Get Started</h1>
     <form>
       <div class="form-group mb-3">
-        <label for="email" class="form-label">Email</label>
+        <label for="email" class="form-label"
+          >Email
+          <ToolTip tooltipText="We will use your email to send you updates."
+        /></label>
         <input
           type="email"
           v-model="user.email"
@@ -30,6 +33,30 @@
         </div>
       </div>
       <div class="form-group mb-3">
+        <label for="registrationCode" class="form-label"
+          >Registratin Code
+          <ToolTip
+            tooltipText="This field is required if you are registered in COBRA health insurance."
+        /></label>
+        <input
+          type="text"
+          v-model="user.registrationCode"
+          @input="v$.user.registrationCode.$touch()"
+          id="registrationCode"
+          class="form-control type-number"
+          :class="v$.user.registrationCode.$error ? 'is-invalid' : 'input-text'"
+        />
+        <div class="input-errors" v-if="v$.user.registrationCode.$error">
+          <span
+            :class="{ 'is-invalid': v$.user.registrationCode.$error }"
+            v-if="v$.user.registrationCode.required"
+          >
+            Please enter a valid registration code
+            <span class="error-icon"></span
+          ></span>
+        </div>
+      </div>
+      <div class="form-group mb-3">
         <label for="ssn" class="form-label">SSN</label>
         <input
           type="text"
@@ -48,47 +75,6 @@
           ></span>
         </div>
       </div>
-      <div class="form-group mb-3">
-        <label for="zipcode" class="form-label">Zip Code</label>
-        <input
-          type="text"
-          v-model="user.zipcode"
-          @input="v$.user.zipcode.$touch()"
-          id="zipcode"
-          class="form-control type-number"
-          :class="v$.user.zipcode.$error ? 'is-invalid' : 'input-text'"
-        />
-        <div class="input-errors" v-if="v$.user.zipcode.$error">
-          <span
-            :class="{ 'is-invalid': v$.user.zipcode.$error }"
-            v-if="v$.user.zipcode.required"
-          >
-            Please enter a valid zip code <span class="error-icon"></span
-          ></span>
-        </div>
-      </div>
-      <div class="form-group mb-3">
-        <label for="dob" class="form-label">Date Of Birth</label>
-        <datepicker
-          v-model="user.dob"
-          @input="v$.user.dob.$touch()"
-          format="MM/dd/yyyy"
-          :class="v$.user.dob.$error ? 'is-invalid' : 'input-text'"
-          wrapper-class="d-block"
-          input-class="form-control type-number"
-          iconColor="#024059"
-          :hideInput="false"
-        ></datepicker>
-        <div class="input-errors" v-if="v$.user.dob.$error">
-          <span
-            :class="{ 'is-invalid': v$.user.dob.$error }"
-            v-if="v$.user.dob.required"
-          >
-            Please enter a valid date of birth <span class="error-icon"></span
-          ></span>
-        </div>
-      </div>
-
       <div class="form-group mt-4">
         <button
           :disabled="v$.user.$invalid"
@@ -106,25 +92,16 @@
 <script lang="ts">
 // @ is an alias to /src
 import { defineComponent, ref } from "vue";
-import {
-  required,
-  email,
-  minLength,
-  maxLength,
-  numeric,
-} from "@vuelidate/validators";
+import { required, email } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
-import Datepicker from "vuejs3-datepicker";
-import moment from "moment";
+import ToolTip from "./common/ToolTip.vue";
 
 export default defineComponent({
   components: {
-    Datepicker,
+    ToolTip,
   },
   setup() {
-    const dateinput = ref(new Date());
-
-    return { v$: useVuelidate(), dateinput };
+    return { v$: useVuelidate() };
   },
   props: {
     formData: {
@@ -136,9 +113,8 @@ export default defineComponent({
     return {
       user: {
         email: "",
+        registrationCode: "",
         ssn: "",
-        zipcode: "",
-        dob: new Date(""),
       },
       submitted: false,
     };
@@ -148,14 +124,8 @@ export default defineComponent({
     return {
       user: {
         email: { required, email },
+        registrationCode: { required },
         ssn: { required },
-        zipcode: {
-          required,
-          minLength: minLength(6),
-          maxLength: maxLength(6),
-          numeric,
-        },
-        dob: { required },
       },
     };
   },
@@ -175,9 +145,6 @@ export default defineComponent({
       } else {
         this.$emit("userDataValidate", this.user);
       }
-    },
-    dateSelected(payload: Date): void {
-      this.user.dob = new Date(payload);
     },
   },
 });

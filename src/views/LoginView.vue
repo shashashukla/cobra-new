@@ -2,38 +2,45 @@
   <div class="container-fluid login-page">
     <div class="row">
       <div class="col-md-6 position-md-static position-relative">
-        <div class="half-bg position-md-fixed position-absolute"></div>
-        <div class="benefits-section p-3 p-md-0">
-          <h1 class="benefit-title text-white mb-3">Benefits</h1>
-          <p class="text-white">
-            The COBRA Enrollment Portal project aims to provide employees with a
-            user-friendly web portal that enables them to self-enroll in COBRA
-            benefits. The portal encompasses a comprehensive workflow designed
-            to guide individuals through the enrollment process and allows them
-            to select from the benefits offered by their former employer.
-          </p>
+        <div class="benefit-img">
+          <div class="background-gradient"></div>
+          <img src="../assets/welcome-image.png" alt="Benefits" />
+          <div class="benefits-section p-3 p-md-0">
+            <h1 class="benefit-title text-white mb-3">Benefits</h1>
+            <p class="text-white">
+              The COBRA Enrollment Portal project aims to provide employees with
+              a user-friendly web portal that enables them to self-enroll in
+              COBRA benefits. The portal encompasses a comprehensive workflow
+              designed to guide individuals through the enrollment process and
+              allows them to select from the benefits offered by their former
+              employer.
+            </p>
+          </div>
+          <div class="black-gradient"></div>
         </div>
       </div>
       <div class="col-md-6">
         <div class="login-section p-3 p-md-0">
-          <component
-            :is="currentStep"
-            :formData="formData"
-            @userDataValidate="handleOtpValidation"
-            @otpValueSubmit="handleOtpSubmit"
-            @editEmailId="handleEmailId"
-            @otpValidateForm="otpValidateForm"
-          ></component>
+          <div class="login-form">
+            <component
+              :is="currentStep"
+              :formData="formData"
+              @userDataValidate="handleOtpValidation"
+              @otpValueSubmit="handleOtpSubmit"
+              @editEmailId="handleEmailId"
+              @otpValidateForm="otpValidateForm"
+            ></component>
+          </div>
+          <div class="footer-row">
+            <div class="footer-links">
+              <ul>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">Privacy Statement</a></li>
+              </ul>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
-  <div class="footer-row">
-    <div class="footer-links">
-      <ul>
-        <li><a href="#">Contact Us</a></li>
-        <li><a href="#">Privacy Statement</a></li>
-      </ul>
     </div>
   </div>
 </template>
@@ -90,6 +97,4 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="scss">
-/* Add your custom styles here */
-</style>
+<style scoped lang="scss"></style>
