@@ -3,36 +3,6 @@
     <h1 class="heading-title">Get Started</h1>
     <form>
       <div class="form-group mb-3">
-        <label for="email" class="form-label"
-          >Email
-          <ToolTip tooltipText="We will use your email to send you updates."
-        /></label>
-        <input
-          type="email"
-          v-model="user.email"
-          @input="v$.user.email.$touch()"
-          id="email"
-          class="form-control"
-          :class="v$.user.email.$error ? 'is-invalid' : 'input-text'"
-        />
-
-        <div v-if="v$.user.email.$error">
-          <div
-            class="input-errors"
-            v-for="(error, index) of v$.user.email.$errors"
-            :key="index"
-          >
-            <span
-              :class="{ 'is-invalid': v$.user.email.$error }"
-              v-if="
-                error.$validator == 'required' || error.$validator == 'email'
-              "
-              >Plase enter a valid email address<span class="error-icon"></span
-            ></span>
-          </div>
-        </div>
-      </div>
-      <div class="form-group mb-3">
         <label for="registrationCode" class="form-label"
           >Registratin Code
           <ToolTip
@@ -75,10 +45,22 @@
           ></span>
         </div>
       </div>
-      <div
-        class="g-recaptcha form-group mb-3"
-        data-sitekey="6LeNMh4nAAAAAJ0pj8ld0HhkxZCLrTvdn9951Ie8"
-      ></div>
+      <div class="google-recaptcha">
+        <vue-recaptcha
+          class="w-100"
+          size="normal"
+          v-show="showRecaptcha"
+          sitekey="6LeNMh4nAAAAAJ0pj8ld0HhkxZCLrTvdn9951Ie8"
+          theme="light"
+          :loading-timeout="loadingTimeout"
+          @verify="recaptchaVerified"
+          @expire="recaptchaExpired"
+          @fail="recaptchaFailed"
+          @error="recaptchaError"
+          ref="vueRecaptcha"
+        >
+        </vue-recaptcha>
+      </div>
       <div class="form-group mt-4">
         <button
           :disabled="v$.user.$invalid"
@@ -87,7 +69,7 @@
           :class="[buttonDesign()]"
           @click="userDataSubmit"
         >
-          VERIFY WITH EMAIL
+          CONTINUE
         </button>
       </div>
     </form>
@@ -95,15 +77,17 @@
 </template>
 <script lang="ts">
 // @ is an alias to /src
-import { defineComponent } from "vue";
-import { required, email } from "@vuelidate/validators";
+import { defineComponent, ref } from "vue";
+import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import ToolTip from "./common/ToolTip.vue";
+import vueRecaptcha from "vue3-recaptcha2";
 import validateSsn from "@/services/validateSsn";
 
 export default defineComponent({
   components: {
     ToolTip,
+    vueRecaptcha,
   },
   setup() {
     return { v$: useVuelidate() };
@@ -117,20 +101,22 @@ export default defineComponent({
   data() {
     return {
       user: {
-        email: "",
         registrationCode: "",
         ssn: "",
+        gRecaptcha: "",
       },
       submitted: false,
+      showRecaptcha: true,
+      loadingTimeout: 30000,
     };
   },
 
   validations() {
     return {
       user: {
-        email: { required, email },
         registrationCode: { required },
         ssn: { required, validateSsn },
+        gRecaptcha: { required },
       },
     };
   },
@@ -147,6 +133,30 @@ export default defineComponent({
       } else {
         this.$emit("userDataValidate", this.user);
       }
+    },
+    recaptchaVerified(response: any) {
+      if (response) {
+        this.user.gRecaptcha = response;
+        console.log(response);
+      }
+    },
+    recaptchaExpired() {
+      if (vueRecaptcha.value) {
+        vueRecaptcha.value.reset();
+        console.log("reset done");
+      } else {
+        console.log("reset failed");
+      }
+      this.user.gRecaptcha = "";
+    },
+    recaptchaFailed() {
+      this.user.gRecaptcha = "";
+
+      console.log("Failed");
+    },
+    recaptchaError(reason: any) {
+      this.user.gRecaptcha = "";
+      console.log("error", reason);
     },
   },
 });
