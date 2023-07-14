@@ -1,6 +1,6 @@
 $primary-color: #ffffff;
 $primary-text-color: #6c757d;
-$border-radius: 2px;
+$border-radius: 2.5px;
 $bg_path: url("assets/login-bg.png");
 $primary: #5d9143;
 $btn-txt-color: #ffffff;
@@ -218,6 +218,9 @@ input.type-number,
 .btn.btn-primary:active {
   color: $btn-txt-color;
 }
+.btn-secondary {
+  --bs-btn-disabled-bg: #707070;
+}
 .heading-title {
   font-size: 30px;
   color: $primary-color;
@@ -233,6 +236,7 @@ p {
 .btn {
   font-size: 16px;
   height: 41px;
+  letter-spacing: 0.85px;
 }
 .form-control {
   color: $primary_color;
@@ -395,6 +399,7 @@ p {
   color: #fff;
   font-size: 12px;
   max-width: 200px;
+  border-radius: $border-radius;
 }
 .tooltip:after {
   position: absolute;
