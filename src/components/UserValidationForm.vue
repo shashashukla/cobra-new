@@ -35,6 +35,7 @@
           id="ssn"
           class="form-control type-number"
           :class="v$.user.ssn.$error ? 'is-invalid' : 'input-text'"
+          v-maska:[ssnFormat]
         />
         <div class="input-errors" v-if="v$.user.ssn.$error">
           <span
@@ -77,12 +78,13 @@
 </template>
 <script lang="ts">
 // @ is an alias to /src
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import { required } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import ToolTip from "./common/ToolTip.vue";
 import vueRecaptcha from "vue3-recaptcha2";
 import validateSsn from "@/services/validateSsn";
+import { vMaska } from "maska";
 
 export default defineComponent({
   components: {
@@ -98,6 +100,7 @@ export default defineComponent({
       required: true,
     },
   },
+  directives: { maska: vMaska },
   data() {
     return {
       user: {
@@ -108,6 +111,10 @@ export default defineComponent({
       submitted: false,
       showRecaptcha: true,
       loadingTimeout: 30000,
+      ssnFormat: {
+        mask: "*##-##-####",
+        eager: true,
+      },
     };
   },
 
