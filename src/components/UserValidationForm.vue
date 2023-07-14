@@ -48,10 +48,9 @@
       </div>
       <div class="google-recaptcha">
         <vue-recaptcha
-          class="w-100"
           size="normal"
           v-show="showRecaptcha"
-          sitekey="6LeNMh4nAAAAAJ0pj8ld0HhkxZCLrTvdn9951Ie8"
+          :sitekey="recaptchaSiteKey"
           theme="light"
           :loading-timeout="loadingTimeout"
           @verify="recaptchaVerified"
@@ -115,6 +114,7 @@ export default defineComponent({
         mask: "*##-##-####",
         eager: true,
       },
+      recaptchaSiteKey: "6LeNMh4nAAAAAJ0pj8ld0HhkxZCLrTvdn9951Ie8",
     };
   },
 
