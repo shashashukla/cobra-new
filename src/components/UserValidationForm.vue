@@ -75,6 +75,10 @@
           ></span>
         </div>
       </div>
+      <div
+        class="g-recaptcha form-group mb-3"
+        data-sitekey="6LeNMh4nAAAAAJ0pj8ld0HhkxZCLrTvdn9951Ie8"
+      ></div>
       <div class="form-group mt-4">
         <button
           :disabled="v$.user.$invalid"
@@ -91,10 +95,11 @@
 </template>
 <script lang="ts">
 // @ is an alias to /src
-import { defineComponent, ref } from "vue";
+import { defineComponent } from "vue";
 import { required, email } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import ToolTip from "./common/ToolTip.vue";
+import validateSsn from "@/services/validateSsn";
 
 export default defineComponent({
   components: {
@@ -125,7 +130,7 @@ export default defineComponent({
       user: {
         email: { required, email },
         registrationCode: { required },
-        ssn: { required },
+        ssn: { required, validateSsn },
       },
     };
   },
@@ -136,9 +141,6 @@ export default defineComponent({
     },
     async userDataSubmit(): Promise<void> {
       this.submitted = true;
-      // console.log("formval", this.user);
-      // console.log("dateformat", moment(this.user.dob).format("DD-MM-yyyy"));
-      // stop here if form is invalid
       this.v$.$touch();
       if (this.v$.$invalid) {
         return;
