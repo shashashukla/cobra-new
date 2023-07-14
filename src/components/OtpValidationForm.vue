@@ -4,7 +4,7 @@
     <p>We have sent a verification code to</p>
     <p class="email-text">
       {{ user.email }}
-      <a class="edit-email" @click="editEmailForm"> EDIT </a>
+      <a class="edit-email edit-pencil" @click="editEmailForm"> EDIT </a>
     </p>
     <form>
       <div class="form-group mb-3">
@@ -109,7 +109,7 @@ export default defineComponent({
     async submitOtp(): Promise<void> {
       this.submitted = true;
       this.v$.$touch();
-      this.$emit("otpValueSubmit", this.formData);
+      // this.$emit("otpValueSubmit", this.formData);
     },
     async editEmailForm(): Promise<void> {
       console.log("editEmailForm");
