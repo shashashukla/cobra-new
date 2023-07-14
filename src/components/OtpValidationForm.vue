@@ -40,7 +40,9 @@
       </div>
     </form>
     <div class="mt-2">
-      <div class="float-left" :class="[resendTextEnable]">RESEND CODE</div>
+      <div class="float-left" :class="[resendTextEnable]" @click="resendCode">
+        RESEND CODE
+      </div>
       <div class="timing-color float-right">{{ formatedCountdown }}</div>
     </div>
     <div class="clearfix"></div>
@@ -52,6 +54,7 @@ import { defineComponent } from "vue";
 import { required, maxLength, minLength, numeric } from "@vuelidate/validators";
 import { useVuelidate } from "@vuelidate/core";
 import moment from "moment";
+import { toast } from "vue3-toastify";
 
 export default defineComponent({
   setup() {
@@ -109,13 +112,20 @@ export default defineComponent({
       const buttonStatus = this.v$.otpcode.$invalid;
       return buttonStatus == true ? "btn-secondary" : "btn-primary";
     },
+    resendCode() {
+      if (!this.countdown) {
+        toast.success("Code has been sent to the email address", {
+          position: toast.POSITION.TOP_CENTER,
+          style: { width: "auto" },
+        });
+      }
+    },
     async submitOtp(): Promise<void> {
       this.submitted = true;
       this.v$.$touch();
       // this.$emit("otpValueSubmit", this.formData);
     },
     async editEmailForm(): Promise<void> {
-      console.log("editEmailForm");
       this.$emit("editEmailId");
     },
   },
