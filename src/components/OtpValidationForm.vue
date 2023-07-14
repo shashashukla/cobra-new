@@ -40,7 +40,7 @@
       </div>
     </form>
     <div class="mt-2">
-      <div class="text-secondary resend-code float-left">RESEND CODE</div>
+      <div class="float-left" :class="[resendTextEnable]">RESEND CODE</div>
       <div class="timing-color float-right">{{ formatedCountdown }}</div>
     </div>
     <div class="clearfix"></div>
@@ -74,7 +74,7 @@ export default defineComponent({
       },
       otpcode: "",
       submitted: false,
-      countdown: 60,
+      countdown: 59,
     };
   },
   validations() {
@@ -93,6 +93,9 @@ export default defineComponent({
   computed: {
     formatedCountdown() {
       return moment(this.countdown, "seconds").format("m:ss");
+    },
+    resendTextEnable() {
+      return this.countdown ? "text-secondary" : "resend-code";
     },
   },
   methods: {
