@@ -1,7 +1,8 @@
 const apiEndpoints = {
-  Employee: {
-    getEmployee: "/demoData.json",
-    getAllEmployees: "/get-all-employees",
+  Auth: {
+    login: "/Login",
+    emailVerification: "/Login/email-verification",
+    codeVerification: "/api/Login/code-verification",
   },
 };
 
